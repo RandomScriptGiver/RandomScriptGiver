@@ -10,10 +10,10 @@ local bodyPosition = nil
 local bodyGyro = nil
 local followDistance = 8
 
--- Tunggu PlayerGui
+-- Wait PlayerGui
 repeat wait() until player:FindFirstChild("PlayerGui")
 
--- Buat GUI
+-- Make GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ObjectControlGui"
 screenGui.ResetOnSpawn = false
@@ -30,7 +30,7 @@ cross.TextScaled = true
 cross.Font = Enum.Font.SourceSansBold
 cross.Parent = screenGui
 
--- Tombol builder
+-- Builder Button
 local function createButton(name, order, callback)
 	local button = Instance.new("TextButton")
 	button.Size = UDim2.new(0.4, 0, 0.06, 0)
@@ -45,7 +45,7 @@ local function createButton(name, order, callback)
 	button.MouseButton1Click:Connect(callback)
 end
 
--- Tombol fungsi
+-- Fungsion Button
 createButton("Take", 0, function()
 	if pickedObject then return end
 
@@ -91,7 +91,7 @@ createButton("Release", 3, function()
 	end
 end)
 
--- Update posisi object tiap frame
+-- Update object position every frame
 RunService.RenderStepped:Connect(function()
 	if pickedObject and bodyPosition and bodyGyro then
 		local camCF = camera.CFrame
@@ -101,7 +101,7 @@ RunService.RenderStepped:Connect(function()
 		bodyPosition.Position = targetPos
 		bodyGyro.CFrame = CFrame.new(Vector3.zero, camCF.LookVector)
 
-		-- Naikkan gaya dorong jika terlalu jauh
+		-- Increase thrust if it is too far
 		if distance > 100 then
 			bodyPosition.P = 100000
 		else
